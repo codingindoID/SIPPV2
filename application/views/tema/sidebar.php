@@ -1,11 +1,8 @@
 <!-- Main Sidebar Container -->
-<aside class="main-sidebar sidebar-light-info elevation-1">
+<aside class="main-sidebar sidebar-light-primary elevation-1 bg-light">
     <!-- Brand Logo -->
-    <a href="<?= site_url() ?>" class="brand-link bg-info d-flex">
-        <img src="<?= base_url(LOGO) ?>" alt="AdminLTE Logo" class="brand-image img-circle m-auto">
-        <div style=" height: 27px;"></div>
-        <!-- <span class="brand-text font-weight-light"><?= APPNAME ?></span> -->
-        <!-- <span class="brand-text font-weight-light"><?= APPNAME ?></span> -->
+    <a href="<?= site_url() ?>" class="brand-link d-flex bg-primary">
+        <img src="<?= base_url(LOGO) ?>" alt="AdminLTE Logo" class="brand-image ml-auto mr-auto">
     </a>
 
     <div class="sidebar">

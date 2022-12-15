@@ -1,12 +1,12 @@
 <!-- Navbar -->
-<nav class="main-header navbar navbar-expand navbar-white navbar-light">
+<nav class="main-header navbar navbar-expand navbar-white navbar-light bg-primary">
     <!-- Left navbar links -->
     <ul class="navbar-nav">
         <li class="nav-item">
-            <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="icofont-navigation-menu"></i></a>
+            <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="icofont-navigation-menu text-white"></i></a>
         </li>
         <li class="nav-item d-none d-sm-inline-block">
-            <a href="#" class="nav-link">KATA</a>
+            <a href="#" class="nav-link text-white">SIPP</a>
         </li>
     </ul>
 

@@ -9,7 +9,9 @@ class Beranda extends MY_Controller
     public function index()
     {
         $data = [
-            'active'        => 'beranda'
+            'active'        => 'beranda',
+            'title'         => 'Beranda',
+            'sub'           => 'beranda'
         ];
         $this->template->load('tema/index', 'index', $data);
     }
