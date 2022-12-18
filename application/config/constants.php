@@ -89,3 +89,9 @@ defined('EXIT__AUTO_MAX')      or define('EXIT__AUTO_MAX', 125); // highest auto
 define('SINENAME', "SIPP");
 define('APPNAME', "SIPP");
 define('LOGO', "assets/dist/img/logo.png");
+define('KWARAN', "Kwaran");
+
+
+define('SUPERADMIN', "1");
+define('ADMIN_KWARAN', "2");
+define('ADMIN_GUDEP', "3");

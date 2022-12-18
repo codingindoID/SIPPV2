@@ -7,7 +7,7 @@
 	}
 </style>
 
-<body class="hold-transition">
+<body class="hold-transition text-xs">
 	<div class="wrapper">
 
 		<?php $this->load->view('tema/navbar') ?>

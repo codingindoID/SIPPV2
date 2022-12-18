@@ -1,41 +1,13 @@
-<li class="nav-header">
-    <b>Anggota</b>
-</li>
-<li class="nav-item">
-    <a href="#" class="nav-link">
-        <i class="nav-icon icofont-home"></i>
-        <p>
-            Anggota
-            <i class="right icofont-rounded-right"></i>
-        </p>
-    </a>
-    <ul class="nav nav-treeview">
-        <li class="nav-item">
-            <a href="#" class="nav-link">
-                <i class="icofont-check-circled"></i>
-                <p>Daftar Anggota</p>
-            </a>
-        </li>
-        <li class="nav-item">
-            <a href="#" class="nav-link">
-                <i class="icofont-check-circled"></i>
-                <p>Tambah Anggota</p>
-            </a>
-        </li>
-        <li class="nav-item">
-            <a href="#" class="nav-link">
-                <i class="icofont-check-circled"></i>
-                <p>Export Anggota</p>
-            </a>
-        </li>
-    </ul>
-</li>
+<?php
+$menuPotensi = ['pangkalan', 'kwarran', 'gudep'];
+$menuAdmin = ['admin_kwaran', 'admin_gudep'];
+?>
 
 <li class="nav-header">
     <b>Master Data</b>
 </li>
-<li class="nav-item">
-    <a href="#" class="nav-link">
+<li class="nav-item <?= in_array($active, $menuPotensi, true) ? 'menu-open' : '' ?>">
+    <a href="#" class="nav-link <?= in_array($active, $menuPotensi, true) ? 'active' : '' ?>">
         <i class="nav-icon icofont-bulb-alt"></i>
         <p>
             Potensi
@@ -44,21 +16,21 @@
     </a>
     <ul class="nav nav-treeview">
         <li class="nav-item">
-            <a href="#" class="nav-link">
+            <a href="<?= site_url('pangkalan') ?>" class="nav-link <?= $active == 'pangkalan' ? 'active' : '' ?>">
                 <i class="icofont-check-circled"></i>
                 <p>Pangkalan</p>
             </a>
         </li>
         <li class="nav-item">
-            <a href="#" class="nav-link">
-                <i class="icofont-check-circled"></i>
+            <a href="<?= site_url('gudep') ?>" class="nav-link <?= $active == 'gudep' ? 'active' : '' ?>"">
+                <i class=" icofont-check-circled"></i>
                 <p>Gudep</p>
             </a>
         </li>
         <li class="nav-item">
-            <a href="#" class="nav-link">
+            <a href="<?= site_url('kwaran') ?>" class="nav-link <?= $active == 'kwarran' ? 'active' : '' ?>">
                 <i class="icofont-check-circled"></i>
-                <p>Kwarran</p>
+                <p><?= ucfirst(KWARAN) ?></p>
             </a>
         </li>
     </ul>
@@ -67,8 +39,8 @@
 <li class="nav-header">
     <b>Master Admin</b>
 </li>
-<li class="nav-item">
-    <a href="#" class="nav-link">
+<li class="nav-item <?= in_array($active, $menuAdmin, true) ? 'menu-open' : '' ?>">
+    <a href="#" class="nav-link <?= in_array($active, $menuAdmin, true) ? 'active' : '' ?>">
         <i class="nav-icon icofont-gears"></i>
         <p>
             Kelola Admin
@@ -77,15 +49,15 @@
     </a>
     <ul class="nav nav-treeview">
         <li class="nav-item">
-            <a href="#" class="nav-link">
+            <a href="<?= site_url('admin/adminKwaran') ?>" class="nav-link <?= $active == 'admin_kwaran' ? 'active' : '' ?>">
                 <i class="icofont-user-alt-2"></i>
-                <p>Admin Kwarran</p>
+                <p>Admin <?= ucfirst(KWARAN) ?></p>
             </a>
         </li>
         <li class="nav-item">
-            <a href="#" class="nav-link">
+            <a href="<?= site_url('admin/admingudep') ?>" class="nav-link <?= $active == 'admin_gudep' ? 'active' : '' ?>">
                 <i class="icofont-user-alt-2"></i>
-                <p>Admni Gudep</p>
+                <p>Admin Gudep</p>
             </a>
         </li>
     </ul>

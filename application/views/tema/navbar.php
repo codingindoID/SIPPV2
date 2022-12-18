@@ -6,7 +6,9 @@
             <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="icofont-navigation-menu text-white"></i></a>
         </li>
         <li class="nav-item d-none d-sm-inline-block">
-            <a href="#" class="nav-link text-white">SIPP</a>
+            <a href="#" class="nav-link text-white">
+                <marquee behavior="" direction="">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quae officia fugiat ipsum delectus consequatur facilis cum repudiandae molestias commodi! Impedit quod sint tempore veritatis iste hic reiciendis, aperiam porro ut!</marquee>
+            </a>
         </li>
     </ul>
 
@@ -15,86 +17,25 @@
         <!-- Messages Dropdown Menu -->
         <li class="nav-item dropdown">
             <a class="nav-link" data-toggle="dropdown" href="#">
-                <i class="icofont-speech-comments"></i>
-                <span class="badge badge-danger navbar-badge">3</span>
+                <span class="text-bold text-white"> <?= $this->session->userdata('sipp_ses_display') ?></span>
+                <img src="<?= base_url('assets/') ?>dist/img/flaticon/user.png" width="30" alt="User Avatar" class="ml-2 mr-3 img-circle">
             </a>
             <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-                <a href="#" class="dropdown-item">
+                <a href="<?= site_url('profil') ?>" class="dropdown-item">
                     <!-- Message Start -->
                     <div class="media">
-                        <img src="<?= base_url('assets/') ?>dist/img/logo.png" alt="User Avatar" class="img-size-50 mr-3 img-circle">
+                        <img src="<?= base_url('assets/') ?>dist/img/cikal.png" alt="User Avatar" class="img-size-50 mr-3 img-circle">
                         <div class="media-body">
                             <h3 class="dropdown-item-title">
-                                Brad Diesel
-                                <span class="float-right text-sm text-danger"><i class="fas fa-star"></i></span>
+                                <span class="text-bold"> Lihat Profil</span>
+                                <p class="text-muted"><small>Anda Dapat Merubah Password Disini</small></p>
                             </h3>
-                            <p class="text-sm">Call me whenever you can...</p>
-                            <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i> 4 Hours Ago</p>
                         </div>
                     </div>
                     <!-- Message End -->
                 </a>
                 <div class="dropdown-divider"></div>
-                <a href="#" class="dropdown-item">
-                    <!-- Message Start -->
-                    <div class="media">
-                        <img src="<?= base_url('assets/') ?>dist/img/logo.png" alt="User Avatar" class="img-size-50 img-circle mr-3">
-                        <div class="media-body">
-                            <h3 class="dropdown-item-title">
-                                John Pierce
-                                <span class="float-right text-sm text-muted"><i class="fas fa-star"></i></span>
-                            </h3>
-                            <p class="text-sm">I got your message bro</p>
-                            <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i> 4 Hours Ago</p>
-                        </div>
-                    </div>
-                    <!-- Message End -->
-                </a>
-                <div class="dropdown-divider"></div>
-                <a href="#" class="dropdown-item">
-                    <!-- Message Start -->
-                    <div class="media">
-                        <img src="dist/img/user3-128x128.jpg" alt="User Avatar" class="img-size-50 img-circle mr-3">
-                        <div class="media-body">
-                            <h3 class="dropdown-item-title">
-                                Nora Silvester
-                                <span class="float-right text-sm text-warning"><i class="fas fa-star"></i></span>
-                            </h3>
-                            <p class="text-sm">The subject goes here</p>
-                            <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i> 4 Hours Ago</p>
-                        </div>
-                    </div>
-                    <!-- Message End -->
-                </a>
-                <div class="dropdown-divider"></div>
-                <a href="#" class="dropdown-item dropdown-footer">See All Messages</a>
-            </div>
-        </li>
-        <!-- Notifications Dropdown Menu -->
-        <li class="nav-item dropdown">
-            <a class="nav-link" data-toggle="dropdown" href="#">
-                <i class="icofont-notification"></i>
-                <span class="badge badge-warning navbar-badge">15</span>
-            </a>
-            <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-                <span class="dropdown-header">15 Notifications</span>
-                <div class="dropdown-divider"></div>
-                <a href="#" class="dropdown-item">
-                    <i class="fas fa-envelope mr-2"></i> 4 new messages
-                    <span class="float-right text-muted text-sm">3 mins</span>
-                </a>
-                <div class="dropdown-divider"></div>
-                <a href="#" class="dropdown-item">
-                    <i class="fas fa-users mr-2"></i> 8 friend requests
-                    <span class="float-right text-muted text-sm">12 hours</span>
-                </a>
-                <div class="dropdown-divider"></div>
-                <a href="#" class="dropdown-item">
-                    <i class="fas fa-file mr-2"></i> 3 new reports
-                    <span class="float-right text-muted text-sm">2 days</span>
-                </a>
-                <div class="dropdown-divider"></div>
-                <a href="#" class="dropdown-item dropdown-footer">See All Notifications</a>
+                <a href="#" onclick="logout()" class="dropdown-item dropdown-footer bg-danger"><i class="icofont-logout"></i> Keluar</a>
             </div>
         </li>
     </ul>

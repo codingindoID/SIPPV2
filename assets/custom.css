@@ -1,0 +1,32 @@
+.pointer {
+    cursor: pointer;
+}
+
+.border-light-dark {
+    border-color: #cdcdcd !important;
+}
+
+.bg-brown {
+    background-color: #662104;
+    color: white;
+}
+
+.bg-custom-success {
+    background-color: #52ff797a !important;
+    color: #006317 !important;
+}
+
+.bg-custom-primary {
+    background-color: #7eb8f7 !important;
+    color: #0044ab;
+}
+
+.bg-custom-danger {
+    background-color: #ffa2abde !important;
+    color: #ff3400;
+}
+
+.bg-custom-teal {
+    background-color: #20c997 !important;
+    color: #00422f;
+}

@@ -1,73 +1,43 @@
-<style>
+<?php
+$level = $this->session->userdata('sipp_ses_level');
+?>
 
-</style>
 <div class="row">
-    <div class="col-md-6">
-        <div class="card card-body d-flex">
-            <img src="<?= base_url('assets/dist/img/flaticon/kwarran.png') ?>" width="50" class="m-auto">
-            <h5 class="m-auto">Kwarran</h5>
-            <h2 class="m-auto text-bold">1500</h2>
+    <?php if ($level == SUPERADMIN) : ?>
+        <div class="col-md-6">
+            <div class="card card-body bg-custom-teal d-flex pointer" onclick="location.href='<?= site_url('kwaran') ?>'">
+                <img src="<?= base_url('assets/dist/img/flaticon/kwarran.png') ?>" width="50" class="m-auto">
+                <h5 class="m-auto">Kwarran</h5>
+                <h2 class="m-auto text-bold"><?= $count['kwarran'] ?></h2>
+            </div>
         </div>
-    </div>
-    <div class="col-md-6">
-        <div class="card card-body d-flex">
-            <img src="<?= base_url('assets/dist/img/flaticon/pangkalan.png') ?>" width="50" class="m-auto">
-            <h5 class="m-auto">Pangkalan</h5>
-            <h2 class="m-auto text-bold">1500</h2>
+    <?php endif ?>
+
+    <?php
+    $aksesMenuIni = [SUPERADMIN, ADMIN_KWARAN];
+    if (in_array($level, $aksesMenuIni, true)) : ?>
+        <div class="col-md-6">
+            <div class="card card-body bg-custom-success d-flex pointer" onclick="location.href='<?= site_url('pangkalan') ?>'">
+                <img src="<?= base_url('assets/dist/img/flaticon/pangkalan.png') ?>" width="50" class="m-auto">
+                <h5 class="m-auto">Pangkalan</h5>
+                <h2 class="m-auto text-bold"><?= number_format($count['pangkalan'], 0) ?></h2>
+            </div>
         </div>
-    </div>
+    <?php endif ?>
     <div class="col-md-6">
-        <div class="card card-body d-flex">
+        <div class="card card-body bg-custom-primary d-flex pointer" onclick="location.href='<?= site_url('gudep') ?>'">
             <img src="<?= base_url('assets/dist/img/flaticon/gudep.png') ?>" width="50" class="m-auto">
             <h5 class="m-auto">Gudep</h5>
-            <h2 class="m-auto text-bold">1500</h2>
+            <h2 class="m-auto text-bold"><?= number_format($count['gudep'], 0) ?></h2>
         </div>
     </div>
-    <div class="col-md-6">
-        <div class="card card-body d-flex">
+    <div class="<?= $level == ADMIN_KWARAN ? 'col-md-12' : 'col-md-6' ?>">
+        <div class="card card-body bg-custom-danger d-flex pointer" onclick="location.href='<?= site_url('anggota') ?>'">
             <img src="<?= base_url('assets/dist/img/flaticon/anggota.png') ?>" width="50" class="m-auto">
             <h5 class="m-auto">Anggota</h5>
-            <h2 class="m-auto text-bold">1500</h2>
+            <h2 class="m-auto text-bold"><?= number_format($count['anggota'], 0) ?></h2>
         </div>
     </div>
 </div>
 
-<h5 class="text-danger text-bold"><i class="icofont-search-user"></i> Potensi Anggota</h5>
-<div class="row">
-    <div class="col-12">
-        <div class="card">
-            <div class="card-header" data-toggle="collapse" data-target="#card-muda">
-                <h5 class="text-bold"><i class="icofont-layers"></i> Potensi Anggota Muda <span class="font-weight-normal text-danger"> (999)</span></h5>
-            </div>
-            <div class="collapse" id="card-muda">
-                <div class="card-body">
-
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="col-12">
-        <div class="card">
-            <div class="card-header" data-toggle="collapse" data-target="#card-dewasa">
-                <h5 class="text-bold"><i class="icofont-layers"></i> Potensi Anggota Dewasa <span class="font-weight-normal text-danger"> (999)</span></h5>
-            </div>
-            <div class="collapse" id="card-dewasa">
-                <div class="card-body">
-
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="col-12">
-        <div class="card">
-            <div class="card-header" data-toggle="collapse" data-target="#card-lain">
-                <h5 class="text-bold"><i class="icofont-layers"></i> Potensi Anggota Lainnya <span class="font-weight-normal text-danger"> (999)</span></h5>
-            </div>
-            <div class="collapse" id="card-lain">
-                <div class="card-body">
-
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+<?php $this->load->view('potensi.php') ?>
