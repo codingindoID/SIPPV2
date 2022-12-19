@@ -6,6 +6,7 @@ class Anggota extends MY_Controller
     {
         parent::__construct();
         $this->load->model('M_serverside');
+        $this->load->model('M_serverside2');
         $this->load->model('M_anggota');
         $this->level = $this->session->userdata('sipp_ses_level');
         $this->kwaran = $this->session->userdata('sipp_ses_kwaran');
@@ -23,6 +24,18 @@ class Anggota extends MY_Controller
         $this->template->load('tema/index', 'daftar-anggota', $data);
     }
 
+    public function anggotaLain()
+    {
+        $data = [
+            'title'     => 'Anggota',
+            'active'    => 'daftar-anggota',
+            'sub'       => 'Daftar Lainnya',
+            'pangkalan' => $this->M_anggota->getPangkalanGroup(),
+            'kwarran'   => $this->db->order_by('nama_kwaran', 'asc')->get('tb_kwaran')->result()
+        ];
+        $this->template->load('tema/index', 'daftar-anggota-lain', $data);
+    }
+
     function formTambahAnggota()
     {
         $data = [
@@ -32,7 +45,8 @@ class Anggota extends MY_Controller
             'darah'     => $this->db->get('tb_darah')->result(),
             'golongan'  => $this->db->get('tb_golongan')->result(),
             'kecamatan' => $this->db->get('tb_kecamatan')->result(),
-            'kwaran'    => $this->db->order_by('nama_kwaran', 'asc')->get('tb_kwaran')->result()
+            'agama'     => $this->db->get('agama')->result(),
+            'kwaran'    => $this->M_anggota->getKwaranForm()
         ];
         $this->template->load('tema/index', 'form-anggota', $data);
     }
@@ -46,18 +60,19 @@ class Anggota extends MY_Controller
         $desa = ($anggota->kecamatan) ? $this->db->get_where('tb_desa', ['id_kecamatan' => $anggota->kecamatan])->result() : [];
 
         $data = [
-            'title'     => 'Anggota',
-            'active'    => 'daftar-anggota',
-            'sub'       => 'Daftar Anggota',
-            'darah'     => $this->db->get('tb_darah')->result(),
-            'golongan'  => $this->db->get('tb_golongan')->result(),
-            'kecamatan' => $this->db->get('tb_kecamatan')->result(),
-            'kwaran'    => $this->db->order_by('nama_kwaran', 'asc')->get('tb_kwaran')->result(),
-            'pangkalan'   => $pangkalan,
-            'gudep'     => $gudep,
-            'tingkat'     => $tingkat,
-            'desa'     => $desa,
-            'anggota'   => $anggota
+            'title'         => 'Anggota',
+            'active'        => 'daftar-anggota',
+            'sub'           => 'Daftar Anggota',
+            'darah'         => $this->db->get('tb_darah')->result(),
+            'golongan'      => $this->db->get('tb_golongan')->result(),
+            'kecamatan'     => $this->db->get('tb_kecamatan')->result(),
+            'kwaran'        => $this->db->order_by('nama_kwaran', 'asc')->get('tb_kwaran')->result(),
+            'agama'         => $this->db->get('agama')->result(),
+            'pangkalan'     => $pangkalan,
+            'gudep'         => $gudep,
+            'tingkat'       => $tingkat,
+            'desa'          => $desa,
+            'anggota'       => $anggota
         ];
         $this->template->load('tema/index', 'form_edit_anggota', $data);
     }
@@ -92,6 +107,11 @@ class Anggota extends MY_Controller
         redirect('anggota/formImport', 'refresh');
     }
 
+    function exportExcel()
+    {
+        $this->M_anggota->excel();
+    }
+
     /* ajax */
     function ajaxAnggota($id_kwaran = null)
     {
@@ -114,6 +134,7 @@ class Anggota extends MY_Controller
             $row[] = $o->nama_pangkalan;
             $row[] = $o->ambalan;
             $row[] = $o->golongan;
+            $row[] = $o->tingkat;
             $row[] = $o->ta;
             $row[] = $button;
 
@@ -124,6 +145,44 @@ class Anggota extends MY_Controller
             "draw"                 => $_POST['draw'],
             "recordsTotal"         => $this->M_serverside->count_all(),
             "recordsFiltered"     => $this->M_serverside->count_filtered(),
+            "data"                 => $data,
+        );
+        //output dalam format JSON
+        echo json_encode($output);
+    }
+
+    function ajaxAnggotaLain()
+    {
+        $list = $this->M_serverside2->get_datatables();
+        $data = array();
+        $no = $_POST['start'];
+        foreach ($list as $o) {
+            $linkEdit = site_url() . 'anggota/formEditAnggota/' . $o->id_anggota;
+            $button = '<div class="dropdown">';
+            $button .= '<a href="#" class="btn-sm btn-success dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="icofont-navigation-menu text-white"></i></a>';
+            $button .= ' <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">';
+            $button .= '<a target="__blank" href="' . $linkEdit . '" type="button" class="dropdown-item"><i class="icofont-eye text-primary"></i> Detail</a>';
+            $button .= '<a data-id="' . $o->id_anggota . '" onclick="hapusBaris(this)" type="button" class="dropdown-item"><i class="icofont-ui-delete text-danger"></i> Hapus</a>';
+            $button .= '</div></div>';
+
+            $row = array();
+            $row[] = ($no++) + 1;
+            $row[] = $o->nama;
+            $row[] = $o->nama_pangkalan;
+            $row[] = $o->ambalan;
+            $row[] = $o->golongan;
+            $row[] = $o->tingkat;
+            $row[] = $o->ta;
+            $row[] = $button;
+
+            $data[] = $row;
+        }
+
+        $output = array(
+            "draw"                 => $_POST['draw'],
+            "recordsTotal"         => $this->M_serverside2->count_all(),
+            "recordsFiltered"     => $this->M_serverside2->count_filtered(),
             "data"                 => $data,
         );
         //output dalam format JSON
@@ -158,5 +217,35 @@ class Anggota extends MY_Controller
         $cek = $this->M_anggota->bulkHapus();
         $this->session->set_flashdata($cek['kode'], $cek['msg']);
         redirect('anggota', 'refresh');
+    }
+
+
+    // khusus update kolom
+    function updateKolomUser()
+    {
+        $this->db->select('id_user');
+        $this->db->select('tb_kwaran.id_kwaran');
+        $this->db->join('tb_pangkalan', 'tb_pangkalan.id_pangkalan = tb_user.id_pangkalan');
+        $this->db->join('tb_kwaran', 'tb_kwaran.id_kwaran = tb_pangkalan.kwaran');
+        $data = $this->db->get_where('tb_user', ['level' => ADMIN_GUDEP])->result();
+
+        foreach ($data as $d) {
+            $this->db->where(['id_user'  => $d->id_user]);
+            $this->db->update('tb_user', ['id_kwaran' => $d->id_kwaran]);
+        }
+    }
+
+    function updateKolomAnggota()
+    {
+        $this->db->select('id_anggota');
+        $this->db->select('tb_gudep.id_pangkalan');
+        $this->db->join('tb_gudep', 'tb_gudep.id_gudep = tb_anggota.id_gudep');
+        $data = $this->db->get('tb_anggota')->result();
+
+
+        foreach ($data as $d) {
+            $this->db->where(['id_anggota'  => $d->id_anggota]);
+            $this->db->update('tb_anggota', ['id_pangkalan' => $d->id_pangkalan]);
+        }
     }
 }

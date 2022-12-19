@@ -7,6 +7,7 @@ class Gudep extends MY_Controller
         parent::__construct();
         $this->load->model('M_serverside');
         $this->load->model('M_serverside_import');
+        $this->load->model('M_gudep');
     }
     public function index()
     {
@@ -14,11 +15,52 @@ class Gudep extends MY_Controller
             'title'             => '<img src="' . base_url('assets/dist/img/flaticon/gudep.png') . '" width="20" class="mr-1">  Gudep',
             'sub'               => 'Master data Gudep',
             'active'            => 'gudep',
+            'pangkalan'         => $this->M_gudep->getPangkalan()
         ];
-        //echo json_encode($data);
         $this->template->load('tema/index', 'daftar-gudep', $data);
     }
 
+    function simpanGudep()
+    {
+        $cek = $this->M_gudep->simpanGudep();
+        $this->session->set_flashdata($cek['kode'], $cek['msg']);
+        redirect('gudep', 'refresh');
+    }
+
+    function detilGudepPage($id_gudep)
+    {
+        $data = [
+            'title'             => '<img src="' . base_url('assets/dist/img/flaticon/gudep.png') . '" width="20" class="mr-1">  Gudep',
+            'sub'               => 'Detil Data Gudep',
+            'active'            => 'gudep',
+            'detil'             => $this->M_gudep->getDetilGudep($id_gudep)
+        ];
+        $this->template->load('tema/index', 'detil-gudep', $data);
+    }
+
+    /* ajax */
+    function detilGudep()
+    {
+        $id_gudep = $this->input->post('id_gudep');
+        $data = $this->db->get_where('tb_gudep', ['id_gudep' => $id_gudep])->row();
+        echo json_encode($data);
+    }
+
+    function hapusGudep()
+    {
+        $id_gudep = $this->input->post('id_gudep');
+        $this->db->where(['id_gudep'    => $id_gudep]);
+        $cek = $this->db->delete('tb_gudep');
+        $res = $cek ?
+            [
+                'kode'      => 'success',
+                'msg'       => 'berhasil'
+            ] : [
+                'kode'      => 'error',
+                'msg'       => 'gagal'
+            ];
+        echo json_encode($res);
+    }
 
     function ajaxgudep()
     {
@@ -31,9 +73,9 @@ class Gudep extends MY_Controller
                          <i class="icofont-navigation-menu text-white"></i>
                     </a>';
             $html .= '<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">';
-            $html .= '<a class="dropdown-item" href="#"><i class="icofont-eye text-primary"></i> Lihat</a>';
-            $html .= '<a class="dropdown-item" href="#modal_edit" data-toggle="modal"><i class="icofont-gear text-success"></i> Edit</a>';
-            $html .= '<a class="dropdown-item" href="#"><i class="icofont-ui-delete text-danger"></i> Hapus</a>';
+            $html .= '<a class="dropdown-item" href="' . site_url('gudep/detilGudepPage/') . $o->id_gudep . '"><i class="icofont-eye text-primary"></i> Lihat</a>';
+            $html .= '<a class="dropdown-item" href="#" onclick="modalGudep(this)" data-id="' . $o->id_gudep . '"><i class="icofont-gear text-success"></i> Edit</a>';
+            $html .= '<a class="dropdown-item" href="#" onclick="hapusGudep(this)" data-id="' . $o->id_gudep . '"><i class="icofont-ui-delete text-danger"></i> Hapus</a>';
             $html .= '</div></div>';
 
             $row = array();
@@ -81,5 +123,10 @@ class Gudep extends MY_Controller
     function totalAnggotaGudep($id_gudep)
     {
         return $this->db->get_where('tb_anggota', ['id_gudep'   => $id_gudep])->num_rows();
+    }
+
+    function exportExcel()
+    {
+        $this->M_gudep->excel();
     }
 }

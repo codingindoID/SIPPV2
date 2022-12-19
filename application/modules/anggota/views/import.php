@@ -1,7 +1,7 @@
 <div class="card">
 	<div class="card-header">
 		<a class="btn-sm btn-warning" href="<?= site_url('anggota') ?>"><i class="icofont-undo"></i> Kembali</a>
-		<a href="<?= base_url('excel/anggota/import_admin.xls') ?>" class="btn-sm btn-success btn-round"><i class="icofont-download"></i> Download Format</a>
+		<a href="<?= base_url('excel/anggota/import_admin.xlsx') ?>" class="btn-sm btn-success btn-round"><i class="icofont-download"></i> Download Format</a>
 	</div>
 	<div class="card-body">
 		<div class="row">

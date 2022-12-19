@@ -1,4 +1,5 @@
-<div class="card card-body">
+<span class="btn-sm btn-warning pointer" onclick="history.back()"><i class="icofont-undo"></i> Kembali</span>
+<div class="card card-body mt-2">
     <form method="post" action="<?php echo site_url('anggota/simpanAnggota/') ?>">
         <div class="row">
             <div class="col-md-3">
@@ -8,7 +9,7 @@
                         <select id="kwaran" name="kwaran" class="form-control" required>
                             <option value="">Pilih . . </option>
                             <?php foreach ($kwaran as $k) : ?>
-                                <option value="<?php echo $k->id_kwaran ?>"><?php echo $k->nama_kwaran ?></option>
+                                <option value="<?php echo $k->id_kwaran ?>"><?= $k->nomor_kwaran ?> - <?php echo $k->nama_kwaran ?></option>
                             <?php endforeach ?>
                         </select>
                     </div>
@@ -45,6 +46,17 @@
                         <input type="text" class="form-control" name="nama" required>
                     </div>
                 </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label>Agama<span class="text-danger">**</span></label>
+                        <select id="agama" name="agama" class="form-control" style="width: 100%;" required>
+                            <option value="">PILIH AGAMA . . </option>
+                            <?php foreach ($agama as $a) : ?>
+                                <option value="<?php echo $a->agama ?>"><?php echo $a->agama ?></option>
+                            <?php endforeach ?>
+                        </select>
+                    </div>
+                </div>
             </div>
             <div class="row">
                 <div class="col-md">
@@ -54,14 +66,12 @@
             <div class="row">
                 <div class="col-md-4">
                     <div class="form-group">
-                        <div class="select2-input">
-                            <select id="kecamatan" name="kecamatan" class="form-control" style="width: 100%;" required>
-                                <option value="">KECAMATAN . . </option>
-                                <?php foreach ($kecamatan as $kec) : ?>
-                                    <option value="<?php echo $kec->id_kecamatan ?>"><?php echo $kec->nama_kecamatan ?></option>
-                                <?php endforeach ?>
-                            </select>
-                        </div>
+                        <select id="kecamatan" name="kecamatan" class="form-control" style="width: 100%;" required>
+                            <option value="">KECAMATAN . . </option>
+                            <?php foreach ($kecamatan as $kec) : ?>
+                                <option value="<?php echo $kec->id_kecamatan ?>"><?php echo $kec->nama_kecamatan ?></option>
+                            <?php endforeach ?>
+                        </select>
                     </div>
                 </div>
                 <div class="col-md-4">

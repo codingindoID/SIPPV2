@@ -54,6 +54,10 @@ $menuAnggota = ['daftar-anggota'];
                     <?php $this->load->view('tema/menu/admin-kwaran') ?>
                 <?php endif ?>
 
+                <?php if ($level == ADMIN_GUDEP) : ?>
+                    <?php $this->load->view('tema/menu/admin-gudep') ?>
+                <?php endif ?>
+
                 <!-- menu -->
             </ul>
         </nav>

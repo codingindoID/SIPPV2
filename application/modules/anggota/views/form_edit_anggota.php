@@ -1,4 +1,5 @@
-<div class="card card-body">
+<span class="btn-sm btn-warning pointer" onclick="history.back()"><i class="icofont-undo"></i> Kembali</span>
+<div class="card card-body mt-2">
 	<form method="post" action="<?php echo site_url('anggota/simpanAnggota') ?>">
 		<div class="row">
 			<div class="col-md-3">
@@ -50,6 +51,17 @@
 					<div class="form-group">
 						<label>Nama **</label>
 						<input type="text" class="form-control" name="nama" value="<?php echo $anggota->nama ?>" required>
+					</div>
+				</div>
+				<div class="col-md-6">
+					<div class="form-group">
+						<label>Agama<span class="text-danger">**</span></label>
+						<select id="agama" name="agama" class="form-control" style="width: 100%;" required>
+							<option value="">PILIH AGAMA . . </option>
+							<?php foreach ($agama as $a) : ?>
+								<option value="<?php echo $a->agama ?>" <?= $anggota->agama == $a->agama ? 'selected' : '' ?>><?php echo $a->agama ?></option>
+							<?php endforeach ?>
+						</select>
 					</div>
 				</div>
 			</div>

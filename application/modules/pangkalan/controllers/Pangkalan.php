@@ -53,6 +53,11 @@ class Pangkalan extends MY_Controller
         $this->template->load('tema/index', 'detil-pangkalan', $data);
     }
 
+    function exportExcel()
+    {
+        $this->M_pangkalan->excel();
+    }
+
     /* ajax */
     function ajaxDetilPangkalan()
     {

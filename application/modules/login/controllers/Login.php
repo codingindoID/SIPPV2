@@ -26,7 +26,7 @@ class Login extends MY_Controller
             'sipp_ses_id', 'sipp_ses_username', 'sipp_ses_level', 'sipp_ses_pangkalan', 'sipp_ses_kwaran', 'sipp_ses_display', 'sipp_ses_email'
         ];
         $this->session->unset_userdata($array);
-        $this->session->set_flashdata('error', 'Terimkasih, Semoga Harimu Menyenangkan,. sampai jumpa lagi,..');
+        $this->session->set_flashdata('error', 'Terimakasih, Semoga Harimu Menyenangkan,. sampai jumpa lagi,..');
         redirect('login', 'refresh');
     }
 }

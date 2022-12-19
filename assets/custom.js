@@ -19,9 +19,14 @@ function logout() {
 $(function () {
     $('.select2').select2()
 
+    $('#select-pangkalan-gudep').select2({
+        dropdownParent: $('#modal-gudep')
+    });
+
     $('#select-kwaran-admin').select2({
         dropdownParent: $('#modal-admin-kwaran')
     });
+
     $('#pangkalan_anggota_bulk').select2({
         dropdownParent: $('#modal-bulk')
     });

@@ -11,12 +11,11 @@ $(document).ready(function () {
             dataType: "json",
             success: function (data) {
                 $('#id_pangkalan').attr('disabled', false)
-                let html = ''
+                let html = `<option value="">Pilih Pangkalan . . .</option>`
                 for (let index = 0; index < data.length; index++) {
-                    html += `<option value="">Pilih Pangkalan . . .</option>`
                     html += `<option value="${data[index].id_pangkalan}">${data[index].nama_pangkalan}</option>`
                 }
-                $('#id_pangkalan').append(html)
+                $('#id_pangkalan').html(html)
             }
         });
     });

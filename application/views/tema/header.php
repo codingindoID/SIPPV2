@@ -19,6 +19,7 @@
     <link rel="stylesheet" href="<?= base_url('assets/') ?>plugins/select2/css/select2.min.css">
     <link rel="stylesheet" href="<?= base_url('assets/') ?>dist/css/adminlte.min.css">
     <link rel="stylesheet" href="<?= base_url('assets/') ?>custom.css">
+    <link rel="shortcut icon" href="<?= base_url('assets/dist/img/cikal.png') ?>" type="image/x-icon">
     <div id="base_url" data-id="<?= site_url() ?>"></div>
 </head>
 <?php

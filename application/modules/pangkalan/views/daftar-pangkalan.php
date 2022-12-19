@@ -7,8 +7,8 @@
             <div class="col-md-6 text-right">
                 <div class="btn-group" role="group" aria-label="Basic example">
                     <a href="#" onclick="modalPangkalan(this)" data-id="" data-toggle="modal" class="btn-sm btn-success"><i class="icofont-checked"></i> Tambah</a>
-                    <a href="#" class="btn-sm btn-primary ml-1"><i class="icofont-upload"></i> Import</a>
-                    <a href="#" class="btn-sm btn-info ml-1"><i class="icofont-download"></i> Export</a>
+                    <!-- <a href="#" class="btn-sm btn-primary ml-1"><i class="icofont-upload"></i> Import</a> -->
+                    <a href="<?= site_url('pangkalan/exportExcel') ?>" class="btn-sm btn-info ml-1"><i class="icofont-download"></i> Export</a>
                 </div>
             </div>
         </div>

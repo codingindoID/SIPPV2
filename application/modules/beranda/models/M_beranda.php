@@ -38,32 +38,116 @@ class M_beranda extends CI_Model
 
     function anggota()
     {
+        $this->db->select('golongan');
+        $this->db->select('tingkat');
         if ($this->level == ADMIN_KWARAN) {
             $this->db->where('kwaran', $this->kwaran);
         }
         if ($this->level == ADMIN_GUDEP) {
-            $this->db->where('id_pangkalan', $this->pangkalan);
+            $this->db->where('tb_pangkalan.id_pangkalan', $this->pangkalan);
         }
         $this->db->join('tb_pangkalan', 'tb_pangkalan.id_pangkalan = tb_anggota.id_pangkalan');
         return $this->db->get('tb_anggota')->num_rows();
     }
 
-
     function potensi()
     {
-        $golonganMuda = ['siaga', 'penggalang', 'penegak', 'pandega'];
-        $golonganLain = ['siaga', 'penggalang', 'penegak', 'pandega', 'dewasa'];
+        return  [
+            'count_muda'    => $this->potensiMuda(),
+            'count_dewasa'  => $this->potensiDewasa(),
+            'count_lain'    => $this->potensiLain(),
+        ];
+    }
 
+    function potensiMuda()
+    {
+        $golonganMuda = ['siaga', 'penggalang', 'penegak', 'pandega'];
+        $this->db->select('id_anggota');
         $this->db->where_in('golongan', $golonganMuda);
+        if ($this->level == ADMIN_KWARAN) {
+            $this->db->where('id_kwaran', $this->kwaran);
+        }
+
+        if ($this->level == ADMIN_GUDEP) {
+            $this->db->where('id_pangkalan', $this->pangkalan);
+        }
+
         $potensiMuda = $this->db->get('tb_anggota')->num_rows();
 
-        $this->db->where_not_in('golongan', $golonganLain);
-        $potensilain = $this->db->get('tb_anggota')->num_rows();
+        foreach ($golonganMuda as $gol) {
+            $data[]     = [
+                $gol => $this->potensiSubTingkat($gol)
+            ];
+        }
 
-        return  [
-            'count_muda'    => $potensiMuda,
-            'count_dewasa'  => $this->db->get_where('tb_anggota', ['golongan'    => 'dewasa'])->num_rows(),
-            'count_lain'    => $potensilain,
+        return [
+            'total'     => $potensiMuda,
+            'data'      => $data
         ];
+    }
+
+    function potensiLain()
+    {
+        $golonganExclude = ['siaga', 'penggalang', 'penegak', 'pandega', 'dewasa'];
+        $this->db->select('id_anggota');
+        $this->db->where_not_in('golongan', $golonganExclude);
+        if ($this->level == ADMIN_KWARAN) {
+            $this->db->where('id_kwaran', $this->kwaran);
+        }
+
+        if ($this->level == ADMIN_GUDEP) {
+            $this->db->where('id_pangkalan', $this->pangkalan);
+        }
+
+        return $this->db->get('tb_anggota')->num_rows();
+    }
+
+    function potensiDewasa()
+    {
+        $this->db->select('id_anggota');
+        $this->db->where('golongan', 'dewasa');
+
+        if ($this->level == ADMIN_KWARAN) {
+            $this->db->where('id_kwaran', $this->kwaran);
+        }
+
+        if ($this->level == ADMIN_GUDEP) {
+            $this->db->where('id_pangkalan', $this->pangkalan);
+        }
+
+        $potensiDewasa = $this->db->get('tb_anggota')->num_rows();
+
+        $data[]     = [
+            'dewasa' => $this->potensiSubTingkat('dewasa')
+        ];
+
+        return [
+            'total'     => $potensiDewasa,
+            'data'      => $data
+        ];
+    }
+
+    function potensiSubTingkat($golongan)
+    {
+        $this->db->select('sub_tingkat');
+        $tingkat = $this->db->get_where('tb_tingkatan', ['tingkat'  => $golongan])->result();
+
+        foreach ($tingkat as $t) {
+            $this->db->select('tingkat');
+
+            if ($this->level == ADMIN_KWARAN) {
+                $this->db->where('id_kwaran', $this->kwaran);
+            }
+
+            if ($this->level == ADMIN_GUDEP) {
+                $this->db->where('id_pangkalan', $this->pangkalan);
+            }
+
+            $ting = $this->db->get_where('tb_anggota', ['golongan'  => $golongan, 'tingkat' => $t->sub_tingkat])->num_rows();
+            $data[] = [
+                $t->sub_tingkat => $ting
+            ];
+        }
+        return $data;
     }
 }

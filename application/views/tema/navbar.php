@@ -7,7 +7,7 @@
         </li>
         <li class="nav-item d-none d-sm-inline-block">
             <a href="#" class="nav-link text-white">
-                <marquee behavior="" direction="">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quae officia fugiat ipsum delectus consequatur facilis cum repudiandae molestias commodi! Impedit quod sint tempore veritatis iste hic reiciendis, aperiam porro ut!</marquee>
+                <marquee behavior="" direction=""><b>"Kwarcab Jepara Melangkah Pasti"</b></marquee>
             </a>
         </li>
     </ul>

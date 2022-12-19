@@ -11,6 +11,7 @@
     <!-- Theme style -->
     <link rel="stylesheet" href="<?= base_url('assets/') ?>dist/css/adminlte.min.css">
     <link rel="stylesheet" href="<?= base_url('assets/icofont/icofont.min.css') ?>">
+    <link rel="shortcut icon" href="<?= base_url('assets/dist/img/cikal.png') ?>" type="image/x-icon">
 </head>
 
 <body class="hold-transition login-page">

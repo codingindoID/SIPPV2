@@ -8,7 +8,7 @@ $level = $this->session->userdata('sipp_ses_level');
                 <span class="btn-sm btn-warning pointer" onclick="history.back()"><i class="icofont-undo"></i> Kembali</span>
                 <a class="btn-sm btn-primary mt-auto my-auto ml-1" href="<?= site_url('anggota/formTambahAnggota') ?>"><i class="icofont-user-alt-2"></i> Tambah Anggota</a>
                 <a class="btn-sm btn-info mt-auto my-auto ml-1" href="<?= site_url('anggota/formImport') ?>"><i class="icofont-upload-alt"></i> Import Excel</a>
-                <a class="btn-sm btn-success mt-auto my-auto ml-1" href="#"><i class="icofont-file-excel"></i> Export Anggota</a>
+                <a class="btn-sm btn-success mt-auto my-auto ml-1" href="<?= site_url('anggota/exportExcel') ?>"><i class="icofont-file-excel"></i> Export Anggota</a>
             </div>
             <div class="col-md-6">
                 <div class="row">
@@ -43,6 +43,7 @@ $level = $this->session->userdata('sipp_ses_level');
                         <th>Asal Pangkalan</th>
                         <th>Satuan</th>
                         <th>Golongan</th>
+                        <th>Tingkat</th>
                         <th>TA</th>
                         <th class="text-center">#</th>
                     </tr>
