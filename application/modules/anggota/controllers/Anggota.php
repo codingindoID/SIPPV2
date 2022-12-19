@@ -240,6 +240,7 @@ class Anggota extends MY_Controller
         $this->db->select('id_anggota');
         $this->db->select('tb_gudep.id_pangkalan');
         $this->db->join('tb_gudep', 'tb_gudep.id_gudep = tb_anggota.id_gudep');
+        $this->db->where('tb_anggota.id_pangkalan', null);
         $data = $this->db->get('tb_anggota')->result();
 
 
