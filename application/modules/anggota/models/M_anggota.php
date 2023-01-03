@@ -8,12 +8,30 @@ use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
 class M_anggota extends CI_Model
 {
+    protected $level;
+    protected $kwaran;
+    protected $pangkalan;
     public function __construct()
     {
         parent::__construct();
         $this->level = $this->session->userdata('sipp_ses_level');
         $this->kwaran = $this->session->userdata('sipp_ses_kwaran');
         $this->pangkalan = $this->session->userdata('sipp_ses_pangkalan');
+    }
+
+    function tahunAjaran()
+    {
+        if ($this->level == ADMIN_GUDEP) {
+            $where = [
+                'id_pangkalan'      => $this->pangkalan,
+            ];
+
+            $this->db->select('ta');
+            $this->db->group_by('ta');
+            $this->db->where($where);
+            return $this->db->get('tb_anggota')->result();
+        }
+        return [];
     }
 
     function getPangkalanGroup()

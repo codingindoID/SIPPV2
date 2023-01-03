@@ -8,8 +8,6 @@ class Anggota extends MY_Controller
         $this->load->model('M_serverside');
         $this->load->model('M_serverside2');
         $this->load->model('M_anggota');
-        $this->level = $this->session->userdata('sipp_ses_level');
-        $this->kwaran = $this->session->userdata('sipp_ses_kwaran');
     }
 
     public function index()
@@ -19,8 +17,10 @@ class Anggota extends MY_Controller
             'active'    => 'daftar-anggota',
             'sub'       => 'Daftar Anggota',
             'pangkalan' => $this->M_anggota->getPangkalanGroup(),
-            'kwarran'   => $this->db->order_by('nama_kwaran', 'asc')->get('tb_kwaran')->result()
+            'kwarran'   => $this->db->order_by('nama_kwaran', 'asc')->get('tb_kwaran')->result(),
+            'tahun'     => $this->M_anggota->tahunAjaran()
         ];
+        // echo json_encode($data);
         $this->template->load('tema/index', 'daftar-anggota', $data);
     }
 

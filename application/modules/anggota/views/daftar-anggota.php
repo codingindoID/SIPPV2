@@ -87,6 +87,11 @@ $level = $this->session->userdata('sipp_ses_level');
                                 <label>Pilih Tahun Ajaran</label>
                                 <select id="ta_bulk" name="ta" required class="form-control">
                                     <option value="">--Pilih Tahun--</option>
+                                    <?php if ($level == ADMIN_GUDEP) : ?>
+                                        <?php foreach ($tahun as $var) : ?>
+                                            <option value="<?= $var->ta ?>"><?= $var->ta ?></option>
+                                        <?php endforeach ?>
+                                    <?php endif ?>
                                 </select>
                             </div>
                         </div>
