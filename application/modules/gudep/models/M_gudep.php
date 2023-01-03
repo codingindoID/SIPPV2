@@ -6,6 +6,9 @@ use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
 class M_gudep extends CI_Model
 {
+    protected $level;
+    protected $kwaran;
+    protected $pangkalan;
     public function __construct()
     {
         parent::__construct();

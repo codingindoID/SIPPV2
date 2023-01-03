@@ -141,6 +141,9 @@ class M_anggota extends CI_Model
     {
         $ta = $this->input->post('ta');
         $id_pangkalan = $this->input->post('id_pangkalan');
+        if ($this->level == ADMIN_GUDEP) {
+            $id_pangkalan = $this->pangkalan;
+        }
 
         $this->db->where(['id_pangkalan'    => $id_pangkalan, 'ta'   => $ta]);
         $cek = $this->db->delete('tb_anggota');
