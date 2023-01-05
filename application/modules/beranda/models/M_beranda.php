@@ -36,6 +36,9 @@ class M_beranda extends CI_Model
         if ($this->level == ADMIN_KWARAN) {
             $this->db->where('kwaran', $this->kwaran);
         }
+        if ($this->level == ADMIN_GUDEP) {
+            $this->db->where('tb_pangkalan.id_pangkalan', $this->pangkalan);
+        }
         return $this->db->get('tb_gudep')->num_rows();
     }
 

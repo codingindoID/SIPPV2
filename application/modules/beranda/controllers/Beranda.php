@@ -16,8 +16,6 @@ class Beranda extends MY_Controller
             'count'         => $this->M_beranda->dataUtama(),
             'potensi'       => $this->M_beranda->potensi()
         ];
-        // echo json_encode($data);
-        // die();
         $this->template->load('tema/index', 'index', $data);
     }
 }
