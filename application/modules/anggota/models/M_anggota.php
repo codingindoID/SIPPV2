@@ -185,20 +185,20 @@ class M_anggota extends CI_Model
             $worksheet = $spreadsheet->getActiveSheet()->toArray();
 
             for ($i = 1; $i < count($worksheet); $i++) {
-                if ($worksheet[$i][0] != '' && $worksheet[$i][1] != '') {
+                if ($worksheet[$i][0] != '' && $worksheet[$i][1] != '' && $worksheet[$i][2] != '') {
 
                     //handling session level
-                    $kwaran = $this->kwaran;
+                    $kwaran =  $this->kwaran;
                     $id_pangkalan = $this->pangkalan;
                     if ($this->level == SUPERADMIN) {
-                        $kwaran = $worksheet[$i][0];
+                        $kwaran = $worksheet[$i][1];
                     }
 
                     if ($this->level != ADMIN_GUDEP) {
                         $id_pangkalan = $worksheet[$i][0];
                     }
 
-                    $gudep             = $this->db->get_where('tb_gudep', ['no_gudep' => sprintf('%02s', $worksheet[$i][0]) . '.' . sprintf('%03s', $worksheet[$i][2])])->row();
+                    $gudep             = $this->db->get_where('tb_gudep', ['no_gudep' => sprintf('%02s', $kwaran) . '.' . sprintf('%03s', $worksheet[$i][2])])->row();
                     if ($gudep) {
                         $id_gudep         = $gudep->id_gudep;
                         $data[$i] = [
