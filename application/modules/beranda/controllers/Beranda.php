@@ -14,7 +14,8 @@ class Beranda extends MY_Controller
             'title'         => 'Beranda',
             'sub'           => 'beranda',
             'count'         => $this->M_master->dataUtama(),
-            'potensi'       => $this->M_master->potensi()
+            'potensi'       => $this->M_master->potensi(),
+            'detilAnggota'  => $this->M_master->detilAnggota(),
         ];
         $this->template->load('tema/index', 'index', $data);
     }

@@ -183,4 +183,33 @@ class M_master extends CI_Model
         }
         return $data;
     }
+
+    function detilAnggota()
+    {
+        $this->db->order_by('id_kwaran', 'asc');
+        $kwaran = $this->db->get('tb_kwaran')->result();
+
+        $no = 1;
+        foreach ($kwaran as $k) {
+            $data[] = [
+                'no'                => $no++,
+                'nama_kwaran'       => $k->nama_kwaran,
+                'totalAnggota'      => $this->anggota($k->id_kwaran),
+                'siaga'             => $this->numAnggota($k->id_kwaran, 'siaga'),
+                'penggalang'        => $this->numAnggota($k->id_kwaran, 'penggalang'),
+                'penegak'           => $this->numAnggota($k->id_kwaran, 'penegak'),
+                'pandega'           => $this->numAnggota($k->id_kwaran, 'pandega'),
+                'dewasa'            => $this->numAnggota($k->id_kwaran, 'dewasa'),
+            ];
+        }
+        return $data;
+    }
+
+    function numAnggota($id_kwaran, $golongan)
+    {
+        $this->db->select('id_anggota');
+        $this->db->where('golongan', $golongan);
+        $this->db->where('id_kwaran', $id_kwaran);
+        return $this->db->get('tb_anggota')->num_rows();
+    }
 }
