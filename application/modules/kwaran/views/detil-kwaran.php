@@ -3,14 +3,14 @@
         <div class="card card-body bg-custom-success text-center">
             <img src="<?= base_url('assets/dist/img/flaticon/pangkalan.png') ?>" width="50" class="m-auto">
             <h5>Pangkalan</h5>
-            <h2 class="text-bold"><?= $potensi['pangkalan'] ?></h2>
+            <h2 class="text-bold"><?= number_format($count['pangkalan'], 0) ?></h2>
         </div>
     </div>
     <div class="col-sm-6 col-md-4 mt-2">
         <div class="card card-body bg-custom-primary text-center">
             <img src="<?= base_url('assets/dist/img/flaticon/gudep.png') ?>" width="50" class="m-auto">
             <h5>Gudep</h5>
-            <h2 class="text-bold"><?= $potensi['gudep'] ?></h2>
+            <h2 class="text-bold"><?= number_format($count['gudep'], 0) ?></h2>
         </div>
     </div>
 
@@ -19,7 +19,7 @@
         <div class="card card-body bg-custom-danger text-center">
             <img src="<?= base_url('assets/dist/img/flaticon/anggota.png') ?>" width="50" class="m-auto">
             <h5>Anggota</h5>
-            <h2 class="text-bold"><?= $potensi['anggota'] ?></h2>
+            <h2 class="text-bold"><?= number_format($count['anggota'], 0) ?></h2>
         </div>
     </div>
 </div>
@@ -101,3 +101,6 @@
         </div>
     </div>
 </div>
+
+
+<?php $this->load->view('potensi') ?>

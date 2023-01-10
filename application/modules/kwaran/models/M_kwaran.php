@@ -47,10 +47,11 @@ class M_kwaran extends CI_Model
 
     function potensi($id_kwaran)
     {
-        return [
-            'pangkalan'         => $this->db->get_where('tb_pangkalan', ['kwaran' => $id_kwaran])->num_rows(),
-            'gudep'             => $this->db->join('tb_pangkalan', 'tb_pangkalan.id_pangkalan=tb_gudep.id_pangkalan')->get_where('tb_gudep', ['kwaran' => $id_kwaran])->num_rows(),
-            'anggota'           => $this->db->get_where('tb_anggota', ['id_kwaran' => $id_kwaran])->num_rows(),
-        ];
+        return $this->M_beranda->potensi($id_kwaran);
+    }
+
+    function dataUtama($id_kwaran)
+    {
+        return $this->M_beranda->dataUtama($id_kwaran);
     }
 }

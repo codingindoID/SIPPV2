@@ -40,4 +40,4 @@ $level = $this->session->userdata('sipp_ses_level');
     </div>
 </div>
 
-<?php $this->load->view('potensi.php') ?>
+<?php $this->load->view('potensi') ?>

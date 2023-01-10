@@ -1,6 +1,6 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
-class M_beranda extends CI_Model
+class M_master extends CI_Model
 {
     protected $level;
     protected $kwaran;
@@ -12,25 +12,30 @@ class M_beranda extends CI_Model
         $this->kwaran = $this->session->userdata('sipp_ses_kwaran');
         $this->pangkalan = $this->session->userdata('sipp_ses_pangkalan');
     }
-    function datautama()
+
+    function datautama($id_kwaran = null)
     {
         return [
             'kwarran'           => $this->db->get('tb_kwaran')->num_rows(),
-            'pangkalan'         => $this->pangkalan(),
-            'gudep'             => $this->gudep(),
-            'anggota'           => $this->anggota(),
+            'pangkalan'         => $this->pangkalan($id_kwaran),
+            'gudep'             => $this->gudep($id_kwaran),
+            'anggota'           => $this->anggota($id_kwaran),
         ];
     }
 
-    function pangkalan()
+    function pangkalan($id_kwaran)
     {
         if ($this->level == ADMIN_KWARAN) {
             $this->db->where('kwaran', $this->kwaran);
         }
+
+        if ($id_kwaran) {
+            $this->db->where('kwaran', $id_kwaran);
+        }
         return $this->db->get('tb_pangkalan')->num_rows();
     }
 
-    function gudep()
+    function gudep($id_kwaran)
     {
         $this->db->join('tb_pangkalan', 'tb_pangkalan.id_pangkalan = tb_gudep.id_pangkalan');
         if ($this->level == ADMIN_KWARAN) {
@@ -39,10 +44,13 @@ class M_beranda extends CI_Model
         if ($this->level == ADMIN_GUDEP) {
             $this->db->where('tb_pangkalan.id_pangkalan', $this->pangkalan);
         }
+        if ($id_kwaran) {
+            $this->db->where('kwaran', $id_kwaran);
+        }
         return $this->db->get('tb_gudep')->num_rows();
     }
 
-    function anggota()
+    function anggota($id_kwaran)
     {
         $this->db->select('golongan');
         $this->db->select('tingkat');
@@ -52,20 +60,23 @@ class M_beranda extends CI_Model
         if ($this->level == ADMIN_GUDEP) {
             $this->db->where('tb_pangkalan.id_pangkalan', $this->pangkalan);
         }
+        if ($id_kwaran) {
+            $this->db->where('kwaran', $id_kwaran);
+        }
         $this->db->join('tb_pangkalan', 'tb_pangkalan.id_pangkalan = tb_anggota.id_pangkalan');
         return $this->db->get('tb_anggota')->num_rows();
     }
 
-    function potensi()
+    function potensi($id_kwaran = null)
     {
         return  [
-            'count_muda'    => $this->potensiMuda(),
-            'count_dewasa'  => $this->potensiDewasa(),
-            'count_lain'    => $this->potensiLain(),
+            'count_muda'    => $this->potensiMuda($id_kwaran),
+            'count_dewasa'  => $this->potensiDewasa($id_kwaran),
+            'count_lain'    => $this->potensiLain($id_kwaran),
         ];
     }
 
-    function potensiMuda()
+    function potensiMuda($id_kwaran)
     {
         $golonganMuda = ['siaga', 'penggalang', 'penegak', 'pandega'];
         $this->db->select('id_anggota');
@@ -78,11 +89,15 @@ class M_beranda extends CI_Model
             $this->db->where('id_pangkalan', $this->pangkalan);
         }
 
+        if ($id_kwaran) {
+            $this->db->where('id_kwaran', $id_kwaran);
+        }
+
         $potensiMuda = $this->db->get('tb_anggota')->num_rows();
 
         foreach ($golonganMuda as $gol) {
             $data[]     = [
-                $gol => $this->potensiSubTingkat($gol)
+                $gol => $this->potensiSubTingkat($gol, $id_kwaran)
             ];
         }
 
@@ -92,7 +107,7 @@ class M_beranda extends CI_Model
         ];
     }
 
-    function potensiLain()
+    function potensiLain($id_kwaran)
     {
         $golonganExclude = ['siaga', 'penggalang', 'penegak', 'pandega', 'dewasa'];
         $this->db->select('id_anggota');
@@ -105,10 +120,14 @@ class M_beranda extends CI_Model
             $this->db->where('id_pangkalan', $this->pangkalan);
         }
 
+        if ($id_kwaran) {
+            $this->db->where('id_kwaran', $id_kwaran);
+        }
+
         return $this->db->get('tb_anggota')->num_rows();
     }
 
-    function potensiDewasa()
+    function potensiDewasa($id_kwaran)
     {
         $this->db->select('id_anggota');
         $this->db->where('golongan', 'dewasa');
@@ -121,10 +140,14 @@ class M_beranda extends CI_Model
             $this->db->where('id_pangkalan', $this->pangkalan);
         }
 
+        if ($id_kwaran) {
+            $this->db->where('id_kwaran', $id_kwaran);
+        }
+
         $potensiDewasa = $this->db->get('tb_anggota')->num_rows();
 
         $data[]     = [
-            'dewasa' => $this->potensiSubTingkat('dewasa')
+            'dewasa' => $this->potensiSubTingkat('dewasa', $id_kwaran)
         ];
 
         return [
@@ -133,7 +156,7 @@ class M_beranda extends CI_Model
         ];
     }
 
-    function potensiSubTingkat($golongan)
+    function potensiSubTingkat($golongan, $id_kwaran)
     {
         $this->db->select('sub_tingkat');
         $tingkat = $this->db->get_where('tb_tingkatan', ['tingkat'  => $golongan])->result();
@@ -147,6 +170,10 @@ class M_beranda extends CI_Model
 
             if ($this->level == ADMIN_GUDEP) {
                 $this->db->where('id_pangkalan', $this->pangkalan);
+            }
+
+            if ($id_kwaran) {
+                $this->db->where('id_kwaran', $id_kwaran);
             }
 
             $ting = $this->db->get_where('tb_anggota', ['golongan'  => $golongan, 'tingkat' => $t->sub_tingkat])->num_rows();

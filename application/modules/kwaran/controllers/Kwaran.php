@@ -6,6 +6,7 @@ class Kwaran extends MY_Controller
     {
         parent::__construct();
         $this->load->model('M_kwaran');
+        $this->load->model('M_master');
     }
     public function index()
     {
@@ -17,7 +18,6 @@ class Kwaran extends MY_Controller
             'status_kepemilikan' => $this->db->get('tb_status_kepemilikan')->result(),
             'kwaran'            => $this->db->get('tb_kwaran')->result()
         ];
-        //echo json_encode($data);
         $this->template->load('tema/index', 'daftar-kwarran', $data);
     }
 
@@ -36,9 +36,10 @@ class Kwaran extends MY_Controller
             'sub'               => $kwaran->nama_kwaran,
             'active'            => 'kwarran',
             'kwaran'            => $kwaran,
-            'potensi'           => $this->M_kwaran->potensi($id_kwaran)
+            'count'             => $this->M_master->dataUtama($id_kwaran),
+            'potensi'           => $this->M_master->potensi($id_kwaran)
         ];
-        //echo json_encode($detil_kwaran);
+        // echo json_encode($data);
         $this->template->load('tema/index', 'detil-kwaran', $data);
     }
 

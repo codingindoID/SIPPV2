@@ -5,7 +5,7 @@ class Beranda extends MY_Controller
     public function __construct()
     {
         parent::__construct();
-        $this->load->model('M_beranda');
+        $this->load->model('M_master');
     }
     public function index()
     {
@@ -13,8 +13,8 @@ class Beranda extends MY_Controller
             'active'        => 'beranda',
             'title'         => 'Beranda',
             'sub'           => 'beranda',
-            'count'         => $this->M_beranda->dataUtama(),
-            'potensi'       => $this->M_beranda->potensi()
+            'count'         => $this->M_master->dataUtama(),
+            'potensi'       => $this->M_master->potensi()
         ];
         $this->template->load('tema/index', 'index', $data);
     }
